@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio - Restaurante MammaMia</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Link para o arquivo CSS externo -->
+    <link rel="stylesheet" href="cardapio.css"><link rel="stylesheet" href="promo.css">
+<link href="styles.css" rel="stylesheet">
+    <!-- Importando o Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+
+
+
+    <!-- Barra de Navegação Responsiva -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+              <a class="navbar-brand" href="inicio.html">Restaurante MammaMia</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="inicio.html">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="entradas.html">Entradas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="principais.html">Pratos Principais</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sobremesas.html">Sobremesas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="bebidas.html">Bebidas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contato.html">Contato</a>
+                    </li>
+                    <li class="nav-item">
+              <a class="nav-link" href="maispedidos.html">Mais Pedidos</a>
+            </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+     <!-- Promoção (Faixa) -->
+    <div class="promo-navbar" id="promoNavbar">
+        <span class="promo-close" onclick="fecharPromo()">&#10006;</span> <!-- Ícone "X" para fechar -->
+        <h2>Super Promoção - 50% OFF em Todas as Bebidas!</h2>
+        <p>Aproveite descontos incríveis por tempo limitado! Só até o final do mês!</p>
+        <p>Todas as Bebidas por R$ 28,00</p>
+        <a href="#" class="btn btn-light">Ver Mais</a>
+    </div>
+
+    <!-- Botão para mostrar a promoção novamente -->
+    <div class="container text-center mt-4">
+        <button class="btn btn-primary" id="mostrarPromoBtn" onclick="mostrarPromo()">Mostrar Promoção</button>
+    </div>
+
+    <!-- Cardápio -->
+    <div class="container my-5">
+        <section id="entradas">
+            <h2 class="text-center">Vinhos</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+
+                <!-- Card 1 -->
+                <div class="col">
+                    <div class="card">
+                        <img src="bebidas/Chianti vinho.webp" class="card-img-top" alt="Bruschetta">
+                        <div class="card-body">
+                            <h5 class="card-title">Chianti</h5>
+                            <p class="card-text">Um dos vinhos tintos mais famosos da Toscana, feito principalmente com
+                                a uva Sangiovese, perfeito para celebrações.</p>
+                            <span class="preco">R$ 28,00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="col">
+                    <div class="card">
+                        <img src="bebidas/Prosecco.png" class="card-img-top" alt="Caprese">
+                        <div class="card-body">
+                            <h5 class="card-title">Prosecco</h5>
+                            <p class="card-text">Um espumante italiano originário da região de Veneto, famoso por seu
+                                sabor leve e fresco, perfeito para celebrações.</p>
+                            <span class="preco">R$ 28,00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="col">
+                    <div class="card">
+                        <img src="bebidas/Barolo.png" class="card-img-top" alt="Arancini">
+                        <div class="card-body">
+                            <h5 class="card-title">Barolo</h5>
+                            <p class="card-text">Um vinho tinto considerado "o rei dos vinhos", originário da região de
+                                Piemonte, feito a partir da uva Nebbiolo.</p>
+                            <span class="preco">R$ 28,00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cardápio -->
+        <div class="container my-5">
+            <section id="entradas">
+                <h2 class="text-center">Licores </h2>
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+
+                    <!-- Card 1 -->
+                    <div class="col">
+                        <div class="card">
+                            <img src="bebidas/Limoncello.avif" class="card-img-top" alt="Bruschetta">
+                            <div class="card-body">
+                                <h5 class="card-title">Limoncello</h5>
+                                <p class="card-text">Um licor doce de limão, originário da região de Amalfi, no sul da
+                                    Itália. É conhecido por seu sabor refrescante.</p>
+                                <span class="preco">R$ 28,00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="col">
+                        <div class="card">
+                            <img src="bebidas/Averna.jpg" class="card-img-top" alt="Caprese">
+                            <div class="card-body">
+                                <h5 class="card-title">Averna</h5>
+                                <p class="card-text">Um licor amargo da Sicília, com uma mistura de ervas, raízes e
+                                    frutas. Tem um sabor forte e doce-amargo.</p>
+                                <span class="preco">R$ 28,00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="col">
+                        <div class="card">
+                            <img src="bebidas/Amaretto.jpg" class="card-img-top" alt="Arancini">
+                            <div class="card-body">
+                                <h5 class="card-title">Amaretto</h5>
+                                <p class="card-text">Licor doce e amargo à base de amêndoas (ou caroços de pêssego),
+                                    popular em várias regiões da Itália.</p>
+                                <span class="preco">R$ 28,00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cardápio -->
+            <div class="container my-5">
+                <section id="entradas">
+                    <h2 class="text-center">Destilados </h2>
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+                        <!-- Card 1 -->
+                        <div class="col">
+                            <div class="card">
+                                <img src="bebidas/Fernet-Branca.jpg" class="card-img-top" alt="Bruschetta">
+                                <div class="card-body">
+                                    <h5 class="card-title">Fernet-Branca</h5>
+                                    <p class="card-text">Um amaro (licor amargo) muito popular, com ervas e especiarias,
+                                        originário de Milão. Tem um sabor bastante forte e é usado tanto.
+                                    </p>
+                                    <span class="preco">R$ 28,00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="col">
+                            <div class="card">
+                                <img src="bebidas/Cynar.jpg" class="card-img-top" alt="Caprese">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cynar</h5>
+                                    <p class="card-text">Um licor amargo à base de alcachofra, que se tornou popular
+                                        como aperitivo, especialmente na região do norte da Itália.</p>
+                                    <span class="preco">R$ 28,00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="col">
+                            <div class="card">
+                                <img src="bebidas/Sambuca.jpg" class="card-img-top" alt="Arancini">
+                                <div class="card-body">
+                                    <h5 class="card-title">Sambuca</h5>
+                                    <p class="card-text">Um licor doce com sabor de anis, frequentemente servido com
+                                        grãos de café flutuando, conhecido como "Sambuca con la mosca.</p>
+                                    <span class="preco">R$ 28,00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- Cardápio -->
+                <div class="container my-5">
+                    <section id="entradas">
+                        <h2 class="text-center">Coquetéis italianos </h2>
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+                            <!-- Card 1 -->
+                            <div class="col">
+                                <div class="card">
+                                    <img src="bebidas/Negroni.png" class="card-img-top" alt="Bruschetta">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Negroni</h5>
+                                        <p class="card-text">Feito com gin, vermute rosso e Campari, é um clássico
+                                            italiano. Muito popular em bares de todo o mundo.</p>
+                                        <span class="preco">R$ 28,00</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="col">
+                                <div class="card">
+                                    <img src="bebidas/Aperol Spritz.png" class="card-img-top" alt="Caprese">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Aperol Spritz</h5>
+                                        <p class="card-text">Um coquetel refrescante feito com Aperol, espumante e água
+                                            com gás, perfeito para um aperitivo.</p>
+                                        <span class="preco">R$ 28,00</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="col">
+                                <div class="card">
+                                    <img src="bebidas/Bellin.png" class="card-img-top" alt="Arancini">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Bellin</h5>
+                                        <p class="card-text">Um coquetel de Prosecco com purê de pêssego. Originário de
+                                            Veneza, é um clássico em brunches.</p>
+                                        <span class="preco">R$ 28,00</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <!-- Cardápio -->
+                    <div class="container my-5">
+                        <section id="entradas">
+                            <h2 class="text-center">Caffè (Café) </h2>
+                            <div class="row row-cols-1 row-cols-md-3 g-4">
+
+                                <!-- Card 1 -->
+                                <div class="col">
+                                    <div class="card">
+                                        <img src="bebidas2/Caffè Espresso.jpg" class="card-img-top" alt="Bruschetta">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Caffè Espresso</h5>
+                                            <p class="card-text">O espresso italiano é o clássico! Um café curto, forte
+                                                e concentrado, servido em pequenas xícaras. Fundamental no dia a dia dos
+                                                italianos.</p>
+                                            <span class="preco">R$ 28,00</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 2 -->
+                                <div class="col">
+                                    <div class="card">
+                                        <img src="bebidas2/Caffè Macchiato.jpg" class="card-img-top" alt="Caprese">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Caffè Macchiato</h5>
+                                            <p class="card-text">Um espresso "manchado" com um pouco de leite
+                                                vaporizado. É perfeito para quem quer um pouco de suavidade.</p>
+                                            <span class="preco">R$ 28,00</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 3 -->
+                                <div class="col">
+                                    <div class="card">
+                                        <img src="bebidas2/Caffè Latte.jpg" class="card-img-top" alt="Arancini">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Caffè Latte</h5>
+                                            <p class="card-text">Espresso com uma boa quantidade de leite vaporizado,
+                                                criando uma bebida mais cremosa e suave. É perfeito para quem quer um
+                                                pouco de suavidade.</p>
+                                            <span class="preco">R$ 28,00</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 4-->
+                                <div class="col">
+                                    <div class="card">
+                                        <img src="bebidas2/Cappuccino.png" class="card-img-top" alt="Arancini">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Cappuccino</h5>
+                                            <p class="card-text">Café com leite, mas com mais espuma do que o caffè
+                                                latte. Muito popular, especialmente pela manhã, na Itália.</p>
+                                            <span class="preco">R$ 28,00</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 5-->
+                                <div class="col">
+                                    <div class="card">
+                                        <img src="bebidas2/Caffè Freddo.jpg" class="card-img-top" alt="Arancini">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Caffè Freddo</h5>
+                                            <p class="card-text">O café gelado! Muito consumido no verão, o caffè freddo
+                                                é feito com café expresso adoçado e resfriado.</p>
+                                            <span class="preco">R$ 28,00</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 6-->
+                                <div class="col">
+                                    <div class="card">
+                                        <img src="bebidas2/Tè Freddo (Chá Gelado).png" class="card-img-top"
+                                            alt="Arancini">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Tè Freddo (Chá Gelado)</h5>
+                                            <p class="card-text">Embora o chá gelado não seja tão tradicional quanto o
+                                                café, ele tem sua popularidade na Itália.</p>
+                                            <span class="preco">R$ 28,00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Cardápio -->
+                        <div class="container my-5">
+                            <section id="entradas">
+                                <h2 class="text-center">Suco de Frutas </h2>
+                                <div class="row row-cols-1 row-cols-md-3 g-4">
+
+                                    <!-- Card 1 -->
+                                    <div class="col">
+                                        <div class="card">
+                                            <img src="bebidas2/Succo d_Arancia.jpg" class="card-img-top"
+                                                alt="Bruschetta">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Succo d'Arancia</h5>
+                                                <p class="card-text">Suco fresco e natural de laranja, refrescante e
+                                                    cheio de vitamina C.
+                                                    Bebida clássica e muito apreciada na Itália.</p>
+                                                <span class="preco">R$ 28,00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Card 2 -->
+                                    <div class="col">
+                                        <div class="card">
+                                            <img src="bebidas2/Succo di Limone.jpg" class="card-img-top"
+                                                alt="Bruschetta">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Succo di Limone</h5>
+                                                <p class="card-text">(Suco de Limão): Muito consumido no sul da Itália,
+                                                    esse suco é um ótimo jeito de refrescar e também é ótimo para
+                                                    hidratação no calor.</p>
+                                                <span class="preco">R$ 28,00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Card 3 -->
+                                    <div class="col">
+                                        <div class="card">
+                                            <img src="bebidas2/Succo di Pesca.avif" class="card-img-top"
+                                                alt="Bruschetta">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Succo di Pesca</h5>
+                                                <p class="card-text">(Suco de Pêssego): Suave e doce, o suco de pêssego
+                                                    é uma das opções favoritas entre as crianças e adultos durante o
+                                                    dia.</p>
+                                                <span class="preco">R$ 28,00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Card 4-->
+                                    <div class="col">
+                                        <div class="card">
+                                            <img src="bebidas2/Limonata.png" class="card-img-top" alt="Bruschetta">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Limonata</h5>
+                                                <p class="card-text">A limonata italiana é feita com limões frescos,
+                                                    água e açúcar, sendo uma das bebidas mais refrescantes que você pode
+                                                    encontrar em um dia quente. Tem um toque ácido e doce, perfeito para
+                                                    a temporada de verão.</p>
+                                                <span class="preco">R$ 28,00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Card 5-->
+                                    <div class="col">
+                                        <div class="card">
+                                            <img src="bebidas2/Granita.png" class="card-img-top" alt="Bruschetta">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Granita</h5>
+                                                <p class="card-text">Uma verdadeira iguaria do verão siciliano! A
+                                                    granita é uma bebida gelada, mas mais sólida que um suco, feita com
+                                                    frutas frescas (limão, morango, café) e gelo picado. A granita de
+                                                    limão é a mais tradicional.</p>
+                                                <span class="preco">R$ 28,00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Card 6-->
+                                    <div class="col">
+                                        <div class="card">
+                                            <img src="bebidas2/Design sem nome.png">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Orzata</h5>
+                                                <p class="card-text">Uma bebida doce e refrescante feita de cevada e
+                                                    amêndoas, típica da Sicília. Tem um sabor suave e levemente
+                                                    adocicado, sendo uma escolha perfeita para quem quer algo diferente.
+                                                </p>
+                                                <span class="preco">R$ 28,00</span>
+                                            </div></div></div></div></section></div></div></div></div></div></div>
+   <!-- Scripts -->
+    <script>
+        // Função para fechar a promoção
+        function fecharPromo() {
+            const promo = document.getElementById('promoNavbar');
+            const mostrarPromoBtn = document.getElementById('mostrarPromoBtn');
+            
+            promo.style.display = 'none'; // Oculta a faixa de promoção
+            mostrarPromoBtn.style.display = 'block'; // Exibe o botão "Mostrar Promoção"
+        }
+
+        // Função para mostrar a promoção novamente
+        function mostrarPromo() {
+            const promo = document.getElementById('promoNavbar');
+            const mostrarPromoBtn = document.getElementById('mostrarPromoBtn');
+            
+            promo.style.display = 'block'; // Torna a faixa de promoção visível
+            mostrarPromoBtn.style.display = 'none'; // Esconde o botão "Mostrar Promoção"
+        }
+
+        // Ao carregar a página, a promoção será visível e o botão estará escondido
+        window.onload = function() {
+            mostrarPromo();
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+       <!-- Bootstrap JS (opcional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <footer class="bg-dark text-white text-center py-3 mt-5"><p>© 2025 - Emilly Maria - Todos os direitos reservados .</p>
+  </footer>
+  <img src="rest/MammaMia - 1 - Editado.jpg" alt="Logo" class="logo-fixa">
+
+</body>
+
+</html>

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurante Mamammia</title>
+    <!-- Adicionando o Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- CSS incorporado -->
+    <style>
+    .btn-custom {
+  background-color: #f83504; /* Cor azul */
+  border-color: #fffefdde; /* Cor da borda */
+}
+
+.btn-custom:hover {
+  background-color: #f50606; /* Tom mais escuro para o efeito hover */
+  border-color: #880505; /* Cor da borda quando passa o mouse */
+}
+        .preco {
+  font-size: 12px;
+  background-color: #e74c3c;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+      .logo-fixa {
+        position: fixed;
+        bottom: 5px; /* distância da parte inferior da tela */
+        left: 5px; /* distância da borda esquerda */
+        width: 250px; /* ajuste o tamanho da logo conforme necessário */
+        z-index: 1000; /* garante que fique por cima de outros elementos */
+      }
+      /* Carrinho Lateral */
+      /* Carrinho Lateral */
+      #carrinho {
+        position: fixed;
+        top: 100px; /* Coloca o carrinho 100px abaixo do topo da tela */
+        left: -300px; /* Inicialmente escondido à esquerda */
+        width: 280px;
+        height: 70vh; /* Ajustando a altura para 70% da altura da tela */
+        background-color: #f8f9fa;
+        padding: 20px;
+        z-index: 9999;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+        transition: left 0.3s ease; /* Transição suave para abrir e fechar */
+      }
+
+      /* Ao abrir o carrinho */
+      #carrinho.aberto {
+        left: 0; /* Move o carrinho para a posição visível */
+      }
+      #carrinho h3 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .carrinho-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+      }
+
+      .carrinho-item span {
+        font-size: 14px;
+      }
+
+      .carrinho-item button {
+        font-size: 12px;
+      }
+
+      #limparCarrinho {
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      /* Icone de carrinho */
+      #iconCarrinho {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 30px;
+        background-color: #ff1e00;
+        color: white;
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 10000;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <!-- Barra de Navegação Responsiva -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="inicio.html">Restaurante MammaMia</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Alternar navegação"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="inicio.html"
+                >Início</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="entradas.html">Entradas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="principais.html">Pratos Principais</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="sobremesas.html">Sobremesas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bebidas.html">Bebidas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contato.html">Contato</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="maispedidos.html">Mais Pedidos</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Carrinho Lateral -->
+    <div id="carrinho" class="bg-light">
+      <h3>Carrinho</h3>
+      <div id="itensCarrinho" class="mb-4"></div>
+      <h5>Total: R$ <span id="totalCarrinho">0.00</span></h5>
+      <button id="limparCarrinho" class="btn btn-danger mt-3">
+        Limpar Carrinho
+      </button>
+    </div>
+
+    <!-- Icone do Carrinho -->
+    <div
+      id="iconCarrinho"
+      class="d-flex justify-content-center align-items-center"
+      onclick="toggleCarrinho()"
+    >
+      <i class="fas fa-shopping-cart"></i>
+    </div>
+
+<!-- Seção de Destaques -->
+<div class="container mt-5">
+  <h2 class="text-center">Entradas Mais Pedidas</h2>
+  <div class="row">
+    <!-- Card 1: Bruschetta -->
+    <div class="col-md-4">
+      <div class="card">
+        <img
+          src="entradas/Bruschetta.jpg"
+          class="card-img-top"
+          alt="Bruschetta"
+        />
+        <div class="card-body">
+          <h5 class="card-title">Bruschetta</h5>
+          <span class="preco">R$ 35,00</span>
+
+          <!-- Botão "Sobre" -->
+          <button class="btn btn-info" onclick="toggleDescricao('descricaoBruschetta')">Sobre</button>
+
+          <!-- Descrição do prato (inicialmente oculta) -->
+          <div id="descricaoBruschetta" class="card-text" style="display:none;">
+            Uma deliciosa combinação de sabores frescos e autênticos da Itália. A nossa bruschetta é feita com fatias crocantes de pão italiano, cobertas com tomate fresco, manjericão e um toque de azeite de oliva extra virgem. Perfeita como entrada ou petisco, é a escolha ideal para quem deseja uma experiência de sabor leve, aromática e irresistível.
+          </div>
+
+          <!-- Botão Adicionar ao Carrinho -->
+         <button class="btn btn-custom" onclick="adicionarCarrinho('Insalata di Mare', 90.00)">
+  Adicionar ao Carrinho
+</button>
+
+        </div>
+      </div>
+    </div>
+    
+
+        <div class="col-md-4">
+  <div class="card">
+    <img
+      src="entradas/Carpaccio.jpg"
+      class="card-img-top"
+      alt="Carpaccio"
+    />
+    <div class="card-body">
+      <h5 class="card-title">Carpaccio</h5>
+      <span class="preco">R$ 70,00</span>
+      
+      <!-- Botão "Sobre" -->
+      <button class="btn btn-info" onclick="toggleDescricao('descricaoCarpaccio')">Sobre</button>
+
+      <!-- Descrição do prato (inicialmente oculta) -->
+      <div id="descricaoCarpaccio" class="card-text" style="display:none;">
+        Uma entrada sofisticada e delicada que traz a tradição da culinária italiana direto para o seu paladar. 
+        Finas fatias de carne bovina, servidas cruas e temperadas com azeite de oliva extra virgem, limão, pimenta-do-reino 
+        e parmesão ralado na hora. Para um toque especial, nossa versão é acompanhada de rúcula fresca e capers, criando 
+        um contraste perfeito de sabores.
+      </div>
+
+      <!-- Botão Adicionar ao Carrinho -->
+      <button class="btn btn-custom" onclick="adicionarCarrinho('Carpaccio', 70.00)">
+        Adicionar ao Carrinho
+      </button>
+    </div>
+  </div>
+</div>
+
+
+      <div class="col-md-4">
+  <div class="card">
+    <img
+      src="entradas/Insalata di Pomodori e Cipolla.jpg"
+      class="card-img-top"
+      alt="Insalata di Pomodori e Cipolla"
+    />
+    <div class="card-body">
+      <h5 class="card-title">Insalata di Pomodori e Cipolla</h5>
+      <span class="preco">R$ 35,00</span>
+
+      <!-- Botão "Sobre" -->
+      <button class="btn btn-info" onclick="toggleDescricao('descricaoInsalata')">Sobre</button>
+
+      <!-- Descrição do prato (inicialmente oculta) -->
+      <div id="descricaoInsalata" class="card-text" style="display:none;">
+        Uma salada fresca e vibrante, perfeita para começar a refeição com leveza e sabor. Esta combinação clássica da culinária italiana é composta por tomates maduros cortados em rodelas, cebolas roxas finamente fatiadas, regadas com azeite de oliva extra virgem e um toque de vinagre balsâmico. O sabor adocicado dos tomates se mistura perfeitamente com o leve amargor das cebolas, criando um prato refrescante e cheio de personalidade.
+      </div>
+
+      <!-- Botão Adicionar ao Carrinho -->
+      <button class="btn btn-custom" onclick="adicionarCarrinho('Insalata di Pomodori e Cipolla', 35.00)">
+        Adicionar ao Carrinho
+      </button>
+    </div>
+  </div>
+</div>
+  </div>
+
+    
+
+      <!-- Seção de Avaliações -->
+      <div class="container mt-5">
+        <h2 class="text-center">Avaliações</h2>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Lucas Silva</h5>
+                <div class="stars">
+                  <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                </div>
+                <p class="card-text"></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Maiara Oliveira</h5>
+                <div class="stars">
+                  <span>&#9733;&#9733;&#9733;&#9733;</span>
+                </div>
+                <p class="card-text"></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Ana Clara Silva</h5>
+                <div class="stars">
+                  <span>&#9733;&#9733;&#9733;</span>
+                </div>
+                <p class="card-text"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     <!-- Seção de Destaques -->
+<div class="container mt-5">
+  <h2 class="text-center">Entradas Quentes Mais Pedidas</h2>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <img
+          src="entradas/Arancini.png"
+          class="card-img-top"
+          alt="Arancini"
+        />
+        <div class="card-body">
+          <h5 class="card-title">Arancini</h5>
+          <span class="preco">R$ 45,00</span>
+
+          <!-- Botão "Sobre" -->
+          <button class="btn btn-info" onclick="toggleDescricao('descricaoArancini')">Sobre</button>
+
+          <!-- Descrição do prato (inicialmente oculta) -->
+          <div id="descricaoArancini" class="card-text" style="display:none;">
+            Arancini são irresistíveis bolinhos de arroz recheados, típicos da culinária siciliana. Feitos com arroz cozido, recheados com uma mistura saborosa de queijo, carne ou até mesmo cogumelos, e então empanados e fritos até ficarem dourados e crocantes por fora, enquanto mantêm um interior cremoso e recheado. Este prato é uma verdadeira explosão de texturas e sabores, com a crocância externa contrastando com a suavidade do arroz e o recheio delicioso. É uma opção perfeita tanto como entrada quanto como petisco, ideal para compartilhar entre amigos ou familiares.
+          </div>
+
+          <!-- Botão Adicionar ao Carrinho -->
+          <button class="btn btn-custom" onclick="adicionarCarrinho('Arancini', 45.00)">
+            Adicionar ao Carrinho
+          </button>
+        </div>
+      </div>
+    </div>
+  
+
+
+         <div class="col-md-4">
+  <div class="card">
+    <img
+      src="entradas/Insalata di Mare.png"
+      class="card-img-top"
+      alt="Insalata di Mare"
+    />
+    <div class="card-body">
+      <h5 class="card-title">Insalata di Mare</h5>
+      <span class="preco">R$ 90,00</span>
+
+      <!-- Botão "Sobre" -->
+      <button class="btn btn-info" onclick="toggleDescricao('descricaoInsalataMare')">Sobre</button>
+
+      <!-- Descrição do prato (inicialmente oculta) -->
+      <div id="descricaoInsalataMare" class="card-text" style="display:none;">
+        A Insalata di Mare é uma deliciosa e refrescante salada de frutos do mar, perfeita para os dias mais quentes ou como entrada leve e saborosa. Feita com uma variedade de frutos do mar frescos como camarões, lulas, mexilhões e polvo, a salada é temperada com azeite de oliva extra virgem, suco de limão, alho picado e ervas frescas, criando uma combinação de sabores marinhos intensos e refrescantes. O prato é servido frio, destacando a delicadeza e o frescor dos frutos do mar, com um toque de acidez e um leve sabor de alho e ervas que realçam o sabor natural dos ingredientes.
+      </div>
+
+      <!-- Botão Adicionar ao Carrinho -->
+      <button class="btn btn-custom" onclick="adicionarCarrinho('Insalata di Mare', 90.00)">
+        Adicionar ao Carrinho
+      </button>
+    </div>
+  </div>
+</div>
+
+
+          <div class="col-md-4">
+  <div class="card">
+    <img
+      src="entradas/Polenta con Funghi.png"
+      class="card-img-top"
+      alt="Polenta con Funghi"
+    />
+    <div class="card-body">
+      <h5 class="card-title">Polenta con Funghi</h5>
+      <span class="preco">R$ 65,00</span>
+
+      <!-- Botão "Sobre" -->
+      <button class="btn btn-info" onclick="toggleDescricao('descricaoPolentaFunghi')">Sobre</button>
+
+      <!-- Descrição do prato (inicialmente oculta) -->
+      <div id="descricaoPolentaFunghi" class="card-text" style="display:none;">
+        Uma combinação deliciosa de sabores rústicos e sofisticados. A polenta con funghi é feita com fatias de pão tostado, cobertas com uma camada generosa de polenta cremosa e um refogado de cogumelos frescos (funghi), salteados com azeite, alho e ervas finas. Ideal para iniciar a refeição com uma explosão de sabores quentes e reconfortantes. Perfeita para quem aprecia a união da simplicidade e da tradição da culinária italiana.
+      </div>
+
+      <!-- Botão Adicionar ao Carrinho -->
+      <button class="btn btn-custom" onclick="adicionarCarrinho('Polenta con Funghi', 65.00)">
+        Adicionar ao Carrinho
+      </button>
+    </div>
+  </div>
+</div>
+
+     
+
+        <!-- Seção de Avaliações -->
+        <div class="container mt-5">
+          <h2 class="text-center">Avaliações</h2>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Marcos de Oliveira</h5>
+                  <div class="stars">
+                    <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                  </div>
+                  <p class="card-text"></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Daniel Sanches</h5>
+                  <div class="stars">
+                    <span>&#9733;&#9733;&#9733;&#9733;</span>
+                  </div>
+                  <p class="card-text"></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Daiane Caetano</h5>
+                  <div class="stars">
+                    <span>&#9733;&#9733;&#9733;</span>
+                  </div>
+                  <p class="card-text"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seção de Destaques -->
+<div class="container mt-5">
+  <h2 class="text-center">Pratos Principais (Massas) Mais Pedidas</h2>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <img
+          src="massas/Lasanha à Bolonhesa.jpg"
+          class="card-img-top"
+          alt="Lasagna alla Bolognese"
+        />
+        <div class="card-body">
+          <h5 class="card-title">Lasagna alla Bolognese</h5>
+          <span class="preco">R$ 85,00</span>
+
+          <!-- Botão "Sobre" -->
+          <button class="btn btn-info" onclick="toggleDescricao('descricaoLasagnaBolognese')">Sobre</button>
+
+          <!-- Descrição do prato (inicialmente oculta) -->
+          <div id="descricaoLasagnaBolognese" class="card-text" style="display:none;">
+            Um clássico da cozinha italiana, a Lasagna alla Bolognese traz camadas generosas de massa fresca, intercaladas com um molho de carne à bolonhesa, preparado com carne moída, tomates maduros, vinho tinto e um toque de leite, criando um sabor profundo e rico. A cada camada, um toque de béchamel cremoso e um generoso queijo gratinado. Um prato reconfortante e saboroso, perfeito para quem busca a verdadeira tradição da culinária de Emilia-Romagna.
+          </div>
+
+          <!-- Botão Adicionar ao Carrinho -->
+          <button class="btn btn-custom" onclick="adicionarCarrinho('Lasagna alla Bolognese', 85.00)">
+            Adicionar ao Carrinho
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+<div class="col-md-4">
+  <div class="card">
+    <img
+      src="massas/Fettucine Alfredo.jpg"
+      class="card-img-top"
+      alt="Fettucine Alfredo"
+    />
+    <div class="card-body">
+      <h5 class="card-title">Fettucine Alfredo</h5>
+      <span class="preco">R$ 70,00</span>
+
+      <!-- Botão "Sobre" -->
+      <button class="btn btn-info" onclick="toggleDescricao('descricaoFettucineAlfredo')">Sobre</button>
+
+      <!-- Descrição do prato (inicialmente oculta) -->
+      <div id="descricaoFettucineAlfredo" class="card-text" style="display:none;">
+        Uma deliciosa combinação de massa fettucine fresca envolta em um molho cremoso de manteiga, creme de leite e queijo parmesão. Simples, mas irresistível, o Fettucine Alfredo traz a suavidade da manteiga e o sabor profundo do queijo derretido, criando uma experiência indulgente e aconchegante. Ideal para quem busca um prato reconfortante e cheio de sabor, com um toque clássico da culinária italiana.
+      </div>
+
+      <!-- Botão Adicionar ao Carrinho -->
+      <button class="btn btn-custom" onclick="adicionarCarrinho('Fettucine Alfredo', 70.00)">
+        Adicionar ao Carrinho
+      </button>
+    </div>
+  </div>
+</div>
+
+
+            <div class="col-md-4">
+  <div class="card">
+    <img
+      src="massas/Lasagna di spinaci e ricotta.webp"
+      class="card-img-top"
+      alt="Lasagna di spinaci e ricotta"
+    />
+    <div class="card-body">
+      <h5 class="card-title">Lasagna di spinaci e ricotta</h5>
+      <span class="preco">R$ 50,00</span>
+
+      <!-- Botão "Sobre" -->
+      <button class="btn btn-info" onclick="toggleDescricao('descricaoLasagnaSpinaciRicotta')">Sobre</button>
+
+      <!-- Descrição do prato (inicialmente oculta) -->
+      <div id="descricaoLasagnaSpinaciRicotta" class="card-text" style="display:none;">
+        Uma opção vegetariana deliciosa e leve, a Lasagna di Spinaci e Ricotta é composta por camadas de massa fresca, espinafre cozido e ricotta cremosa, temperados com alho e noz-moscada. O prato é finalizado com um molho branco à base de béchamel, que traz uma textura suave e rica. Gratinado com queijo, a lasanha oferece um equilíbrio perfeito entre frescor, cremosidade e sabor. Ideal para quem busca uma refeição reconfortante e nutritiva, sem abrir mão da tradição italiana.
+      </div>
+
+      <!-- Botão Adicionar ao Carrinho -->
+      <button class="btn btn-custom" onclick="adicionarCarrinho('Lasagna di spinaci e ricotta', 50.00)">
+        Adicionar ao Carrinho
+      </button>
+    </div>
+  </div>
+</div>
+
+
+          <!-- Seção de Avaliações -->
+          <div class="container mt-5">
+            <h2 class="text-center">Avaliações</h2>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Cala Alcantra</h5>
+                    <div class="stars">
+                      <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                    </div>
+                    <p class="card-text"></p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Mark Grayson</h5>
+                    <div class="stars">
+                      <span>&#9733;&#9733;&#9733;&#9733;</span>
+                    </div>
+                    <p class="card-text"></p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Luzia Colin</h5>
+                    <div class="stars">
+                      <span>&#9733;&#9733;&#9733;</span>
+                    </div>
+                    <p class="card-text"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Seção de Destaques -->
+         <!-- Seção de Destaques -->
+<div class="container mt-5">
+  <h2 class="text-center">Pratos Principais Mais Pedidos</h2>
+  <div class="row">
+    <!-- Frango à Cacciatora -->
+    <div class="col-md-4">
+      <div class="card">
+        <img
+          src="principais/Frango à Cacciatora.webp"
+          class="card-img-top"
+          alt="Frango à Cacciatora"
+        />
+        <div class="card-body">
+          <h5 class="card-title">Frango à Cacciatora</h5>
+          <span class="preco">R$ 55,00</span>
+
+          <!-- Botão "Sobre" -->
+          <button class="btn btn-info" onclick="toggleDescricao('descricaoFrangoCacciatora')">Sobre</button>
+
+          <!-- Descrição do prato (inicialmente oculta) -->
+          <div id="descricaoFrangoCacciatora" class="card-text" style="display:none;">
+            Inspirado na tradicional cozinha italiana, o Frango à Cacciatora é um prato rústico e saboroso, preparado com pedaços de frango cozidos lentamente em um molho de tomate, vinho tinto, alho, azeite de oliva e ervas frescas como alecrim e tomilho. O resultado é uma carne suculenta, que absorve todo o sabor do molho encorpado, com um toque levemente ácido do tomate e a profundidade do vinho. Perfeito para quem busca um prato reconfortante e cheio de sabor, com aquele toque caseiro e tradicional da cozinha italiana.
+          </div>
+
+          <!-- Botão Adicionar ao Carrinho -->
+          <button class="btn btn-custom" onclick="adicionarCarrinho('Frango à Cacciatora', 55.00)">
+            Adicionar ao Carrinho
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Osso Buco -->
+    <div class="col-md-4">
+      <div class="card">
+        <img
+          src="principais/Osso Buco.avif"
+          class="card-img-top"
+          alt="Osso Buco"
+        />
+        <div class="card-body">
+          <h5 class="card-title">Osso Buco</h5>
+          <span class="preco">R$ 130,00</span>
+
+          <!-- Botão "Sobre" -->
+          <button class="btn btn-info" onclick="toggleDescricao('descricaoOssoBuco')">Sobre</button>
+
+          <!-- Descrição do prato (inicialmente oculta) -->
+          <div id="descricaoOssoBuco" class="card-text" style="display:none;">
+            Uma verdadeira iguaria da cozinha italiana, o Osso Buco é feito com generosos cortes de muslo de vitela cozidos lentamente em um molho saboroso à base de tomate, vinho branco, cebola, alho e ervas frescas. O prato é caracterizado pelo osso no centro, que libera todo o sabor e faz o caldo ainda mais rico e profundo. Tradicionalmente servido com risoto à milanesa ou polenta cremosa, o Osso Buco oferece uma experiência culinária sofisticada e cheia de sabor, perfeita para quem aprecia pratos de longa cocção, com carne macia e molho encorpado.
+          </div>
+
+          <!-- Botão Adicionar ao Carrinho -->
+          <button class="btn btn-custom" onclick="adicionarCarrinho('Osso Buco', 130.00)">
+            Adicionar ao Carrinho
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Saltimbocca à Romana -->
+    <div class="col-md-4">
+      <div class="card">
+        <img
+          src="principais/Saltimbocca à Romana.jpg"
+          class="card-img-top"
+          alt="Saltimbocca à Romana"
+        />
+        <div class="card-body">
+          <h5 class="card-title">Saltimbocca à Romana</h5>
+          <span class="preco">R$ 110,00</span>
+
+          <!-- Botão "Sobre" -->
+          <button class="btn btn-info" onclick="toggleDescricao('descricaoSaltimbocca')">Sobre</button>
+
+          <!-- Descrição do prato (inicialmente oculta) -->
+          <div id="descricaoSaltimbocca" class="card-text" style="display:none;">
+            Um clássico da culinária romana, o Saltimbocca à Romana é um prato sofisticado e saboroso, composto por fatias finas de vitela, cobertas com presunto de parma e folhas de sálvia fresca, tudo perfeitamente selado em uma panela. O prato é finalizado com um toque de vinho branco e manteiga, criando um molho delicado e aromático. O sabor levemente salgado do presunto, o frescor da sálvia e a suavidade da vitela se combinam de forma irresistível, oferecendo uma experiência gastronômica única e cheia de tradição.
+          </div>
+
+          <!-- Botão Adicionar ao Carrinho -->
+          <button class="btn btn-custom" onclick="adicionarCarrinho('Saltimbocca à Romana', 110.00)">
+            Adicionar ao Carrinho
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+            <!-- Seção de Avaliações -->
+            <div class="container mt-5">
+              <h2 class="text-center">Avaliações</h2>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Khyane silvestre</h5>
+                      <div class="stars">
+                        <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                      </div>
+                      <p class="card-text"></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Vincenzo Torres</h5>
+                      <div class="stars">
+                        <span>&#9733;&#9733;&#9733;&#9733;</span>
+                      </div>
+                      <p class="card-text"></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Nélio Cantral</h5>
+                      <div class="stars">
+                        <span>&#9733;&#9733;&#9733;</span>
+                      </div>
+                      <p class="card-text"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Seção de Destaques -->
+           <div class="row">
+  <!-- Chianti Vinho -->
+  <div class="col-md-4">
+    <div class="card">
+      <img src="bebidas/Chianti vinho.webp" class="card-img-top" alt="Chianti Vinho" />
+      <div class="card-body">
+        <h5 class="card-title">Chianti Vinho</h5>
+        <span class="preco">R$ 28,00</span>
+
+        <!-- Botão "Sobre" -->
+        <button class="btn btn-info" onclick="toggleDescricao('descricaoChianti')">Sobre</button>
+
+        <!-- Descrição do Chianti Vinho (inicialmente oculta) -->
+        <div id="descricaoChianti" class="card-text" style="display:none;">
+          Originário da região da Toscana, o Chianti é um dos vinhos mais emblemáticos da Itália, conhecido por seu sabor vibrante e sua versatilidade. Feito principalmente da uva Sangiovese, o Chianti apresenta uma acidez refrescante, com notas de cereja, frutas vermelhas e um toque terroso, que se mistura com nuances de erva e especiarias. É um vinho de corpo médio, com taninos suaves, ideal para acompanhar pratos italianos como massas, carnes grelhadas e queijos curados. Seu equilíbrio e estrutura fazem dele uma escolha perfeita para diversas ocasiões.
+        </div>
+
+        <!-- Botão Adicionar ao Carrinho -->
+        <button class="btn btn-custom" onclick="adicionarCarrinho('Chianti Vinho', 28.00)">
+          Adicionar ao Carrinho
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Averna -->
+  <div class="col-md-4">
+    <div class="card">
+      <img src="bebidas/Averna.jpg" class="card-img-top" alt="Averna" />
+      <div class="card-body">
+        <h5 class="card-title">Averna</h5>
+        <span class="preco">R$ 28,00</span>
+
+        <!-- Botão "Sobre" -->
+        <button class="btn btn-info" onclick="toggleDescricao('descricaoAverna')">Sobre</button>
+
+        <!-- Descrição do Averna (inicialmente oculta) -->
+        <div id="descricaoAverna" class="card-text" style="display:none;">
+          Averna é um amaro siciliano, um licor aromático e herbal que combina uma mistura de ervas, raízes e frutas, maceradas em álcool e depois envelhecidas. Com um sabor encorpado, ligeiramente amargo e doce, o Averna apresenta notas de cítricos, caramelo, especiarias e um leve toque de alcaçuz. É ideal como digestivo, consumido puro, com gelo ou em coquetéis. Sua riqueza de sabores e a suavidade do final fazem dele uma escolha perfeita para quem aprecia bebidas complexas e com personalidade.
+        </div>
+
+        <!-- Botão Adicionar ao Carrinho -->
+        <button class="btn btn-custom" onclick="adicionarCarrinho('Averna', 28.00)">
+          Adicionar ao Carrinho
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cynar -->
+  <div class="col-md-4">
+    <div class="card">
+      <img src="bebidas/Cynar.jpg" class="card-img-top" alt="Cynar" />
+      <div class="card-body">
+        <h5 class="card-title">Cynar</h5>
+        <span class="preco">R$ 28,00</span>
+
+        <!-- Botão "Sobre" -->
+        <button class="btn btn-info" onclick="toggleDescricao('descricaoCynar')">Sobre</button>
+
+        <!-- Descrição do Cynar (inicialmente oculta) -->
+        <div id="descricaoCynar" class="card-text" style="display:none;">
+          Cynar é um amaro italiano único, feito a partir de alcachofras, junto com uma mistura secreta de 33 ervas e plantas. Com um sabor complexo, que combina amargor, doçura suave e notas herbais, o Cynar apresenta um perfil intrigante, com toques de cítricos, especiarias e um leve gosto terroso. Sua versatilidade permite que seja servido puro, com gelo, ou em coquetéis como o clássico Cynar Spritz. Ideal como aperitivo ou digestivo, o Cynar é perfeito para quem busca uma bebida sofisticada e um pouco mais ousada, com o equilíbrio entre o amargo e o aromático.
+        </div>
+
+        <!-- Botão Adicionar ao Carrinho -->
+        <button class="btn btn-custom" onclick="adicionarCarrinho('Cynar', 28.00)">
+          Adicionar ao Carrinho
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+              <!-- Seção de Avaliações -->
+              <div class="container mt-5">
+                <h2 class="text-center">Avaliações</h2>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Maria Custódio</h5>
+                        <div class="stars">
+                          <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <p class="card-text"></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Diego Ferraz</h5>
+                        <div class="stars">
+                          <span>&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <p class="card-text"></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Malia dos Santos</h5>
+                        <div class="stars">
+                          <span>&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <p class="card-text"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+    <!-- Scripts -->
+    <script> function toggleDescricao(id) {
+    var descricao = document.getElementById(id);
+    if (descricao.style.display === 'none') {
+      descricao.style.display = 'block'; // Exibe a descrição
+    } else {
+      descricao.style.display = 'none'; // Oculta a descrição
+    }
+  }
+      let carrinho = [];
+
+      // Atualiza o carrinho e mostra os itens na tela
+      function atualizarCarrinho() {
+        const itensDiv = document.getElementById("itensCarrinho");
+        const totalSpan = document.getElementById("totalCarrinho");
+
+        itensDiv.innerHTML = "";
+        let total = 0;
+
+        // Para cada item no carrinho, atualiza a visualização
+        carrinho.forEach((item, index) => {
+          total += item.preco;
+          itensDiv.innerHTML += `
+                    <div class="carrinho-item d-flex justify-content-between align-items-center">
+                        <span>${item.nome}</span>
+                        <span>R$ ${item.preco.toFixed(2)}</span>
+                        <button class="btn btn-sm btn-danger" onclick="removerItem(${index})">Remover</button>
+                    </div>`;
+        });
+
+        // Atualiza o total no carrinho
+        totalSpan.innerText = total.toFixed(2);
+      }
+
+      // Adiciona item ao carrinho
+      function adicionarCarrinho(nome, preco) {
+        carrinho.push({ nome, preco });
+        atualizarCarrinho();
+      }
+
+      // Remove um item do carrinho
+      function removerItem(index) {
+        carrinho.splice(index, 1);
+        atualizarCarrinho();
+      }
+
+      // Limpa o carrinho
+      document
+        .getElementById("limparCarrinho")
+        .addEventListener("click", () => {
+          carrinho = [];
+          atualizarCarrinho();
+        });
+
+      // Função para alternar a visibilidade do carrinho
+      function toggleCarrinho() {
+        const carrinhoElement = document.getElementById("carrinho");
+        const currentLeft = carrinhoElement.style.left;
+
+        if (currentLeft === "0px") {
+          carrinhoElement.style.left = "-300px"; // Esconde o carrinho
+        } else {
+          carrinhoElement.style.left = "0px"; // Mostra o carrinho
+        }
+      }
+    </script>
+
+    <!-- Scripts do Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+      <p>© 2025 - Emilly Maria - Todos os direitos reservados .</p>
+    </footer>
+    <img src="rest/MammaMia - 1 - Editado.jpg" alt="Logo" class="logo-fixa" />
+  </body>
+</html>

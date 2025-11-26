@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cardapio.css">
+    <title>Carrinho de Compras</title>
+    <!-- Link para o Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Link para o CSS Personalizado -->
+    <style>
+        /* CSS Personalizado */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #cart-items {
+            background-color: #fafafa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .list-group-item {
+            font-size: 16px;
+            padding: 10px 15px;
+            border: none;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .list-group-item:last-child {
+            border-bottom: none;
+        }
+
+        #cart-summary {
+            background-color: #fafafa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        #checkout-btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+        }
+
+        .product-button {
+            width: 200px;
+            margin: 10px 10px 10px 0;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+    </style>
+</head>
+<body>
+      <!-- Barra de Navegação Responsiva -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+              <a class="navbar-brand" href="inicio.html">Restaurante MammaMia</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="inicio.html">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="entradas.html">Entradas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="principais.html">Pratos Principais</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sobremesas.html">Sobremesas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="bebidas.html">Bebidas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contato.html">Contato</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="carrinho.css">Carrinho</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2 class="text-center">Carrinho de Compras</h2>
+        
+        <!-- Seção de itens no carrinho -->
+        <div id="cart-items" class="mt-4">
+            <h4>Itens no Carrinho:</h4>
+            <ul id="cart-list" class="list-group">
+                <!-- Itens do carrinho serão listados aqui -->
+            </ul>
+        </div>
+
+        <!-- Seção de resumo do carrinho -->
+        <div id="cart-summary" class="mt-4">
+            <h4>Resumo do Carrinho</h4>
+            <p><strong>Total:</strong> R$ <span id="cart-total">0.00</span></p>
+            <button class="btn btn-primary" id="checkout-btn">Finalizar Compra</button>
+        </div>
+
+        <!-- Botões para adicionar itens -->
+        <div class="mt-4">
+            <button class="btn btn-success product-button" onclick="addToCart('Produto 1', 100)">Adicionar Produto 1 - R$ 100</button>
+            <button class="btn btn-success product-button" onclick="addToCart('Produto 2', 200)">Adicionar Produto 2 - R$ 200</button>
+            <button class="btn btn-success product-button" onclick="addToCart('Produto 3', 150)">Adicionar Produto 3 - R$ 150</button>
+        </div>
+    </div>
+
+    <!-- Script do JavaScript -->
+    <script>
+        let cart = [];
+
+        // Função para adicionar produto ao carrinho
+        function addToCart(productName, price) {
+            cart.push({ name: productName, price: price });
+            renderCart();
+        }
+
+        // Função para renderizar os itens do carrinho
+        function renderCart() {
+            const cartList = document.getElementById('cart-list');
+            const cartTotal = document.getElementById('cart-total');
+
+            // Limpa a lista de itens
+            cartList.innerHTML = '';
+
+            // Adiciona os itens do carrinho na lista
+            let total = 0;
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.classList.add('list-group-item');
+                li.textContent = `${item.name} - R$ ${item.price.toFixed(2)}`;
+                cartList.appendChild(li);
+                total += item.price;
+            });
+
+            // Atualiza o total no resumo
+            cartTotal.textContent = total.toFixed(2);
+        }
+
+        // Evento de finalizar compra
+        document.getElementById('checkout-btn').addEventListener('click', () => {
+            alert('Compra Finalizada!');
+            cart = []; // Limpa o carrinho após a compra
+            renderCart(); // Atualiza a visualização do carrinho
+        });
+    </script>
+
+    <!-- Link para o Bootstrap JS (opcional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

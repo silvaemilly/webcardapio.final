@@ -1,0 +1,56 @@
+/* Estilos da Navbar */
+.navbar {
+    margin-bottom: 10px;
+}
+
+/* Estilos da Promoção (Faixa) */
+.promo-navbar {
+    background-color: #ff5722; /* Cor de fundo laranja */
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    position: relative;
+    z-index: 999; /* Ficar acima de outros elementos */
+    margin-top: 10px; /* Distância da Navbar */
+    border-radius: 5px;
+}
+
+.promo-navbar h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.promo-navbar p {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.promo-navbar .promo-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.promo-navbar .btn {
+    background-color: #ffffff;
+    color: #ff5722;
+    border: none;
+    font-weight: bold;
+}
+
+/* Responsividade */
+@media (max-width: 767px) {
+    .promo-navbar h2 {
+        font-size: 20px;
+    }
+
+    .promo-navbar p {
+        font-size: 14px;
+    }
+
+    .promo-navbar .btn {
+        font-size: 14px;
+    }
+}
